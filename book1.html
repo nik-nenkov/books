@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>In the Life of a Project: From Concept to Maintenance</title>
+  <link rel="stylesheet" href="book.css">
+</head>
+<body>
+  <div class="book-layout">
+    <nav class="chapter-menu">
+      <a href="index.html" class="back-link" style="margin-bottom:1.5rem;">&larr; Back to Book List</a>
+      <div class="menu-title">Chapters</div>
+      <ul>
+        <li><a href="#" onclick="switchChapter('introduction')">Introduction</a></li>
+        <li><a href="#" onclick="switchChapter('requirements')">Requirements Gathering & Analysis</a></li>
+        <li><a href="#" onclick="switchChapter('planning')">Planning</a></li>
+        <li><a href="#" onclick="switchChapter('design')">System Design</a></li>
+        <li><a href="#" onclick="switchChapter('implementation')">Implementation (Development)</a></li>
+        <li><a href="#" onclick="switchChapter('testing')">Testing</a></li>
+        <li><a href="#" onclick="switchChapter('deployment')">Deployment</a></li>
+        <li><a href="#" onclick="switchChapter('maintenance')">Maintenance & Support</a></li>
+        <li><a href="#" onclick="switchChapter('decommissioning')">Decommissioning</a></li>
+        <li><a href="#" onclick="switchChapter('conclusion')">Conclusion & Next Steps</a></li>
+      </ul>
+    </nav>
+    <div class="main-content">
+      <div class="header">
+        <h1>In the Life of a Project: From Concept to Maintenance</h1>
+        <div id="chapter-title" style="font-size:1.25rem;color:#444;margin-top:0.5rem;margin-bottom:1.5rem;"></div>
+      </div>
+      <div id="book-content"></div>
+    </div>
+  </div>
+  <script>
+    const chapterFiles = {
+      introduction: 'book1/chapter1.txt',
+      requirements: 'book1/chapter2.txt',
+      planning: 'book1/chapter3.txt',
+      design: 'book1/chapter4.txt',
+      implementation: 'book1/chapter5.txt',
+      testing: 'book1/chapter6.txt',
+      deployment: 'book1/chapter7.txt',
+      maintenance: 'book1/chapter8.txt',
+      decommissioning: 'book1/chapter9.txt',
+      conclusion: 'book1/chapter10.txt'
+    };
+
+    const chapterTitles = {
+      introduction: 'Chapter 1: Introduction',
+      requirements: 'Chapter 2: Requirements Gathering & Analysis',
+      planning: 'Chapter 3: Planning',
+      design: 'Chapter 4: System Design',
+      implementation: 'Chapter 5: Implementation (Development)',
+      testing: 'Chapter 6: Testing',
+      deployment: 'Chapter 7: Deployment',
+      maintenance: 'Chapter 8: Maintenance & Support',
+      decommissioning: 'Chapter 9: Decommissioning',
+      conclusion: 'Chapter 10: Conclusion & Next Steps'
+    };
+
+    let LINES_PER_PAGE = 20;
+    let bookLines = [];
+    let bookPages = [];
+    let currentPage = 0;
+    let currentChapter = 'introduction';
+
+    function loadChapter(chapter) {
+      fetch(chapterFiles[chapter])
+        .then(response => response.text())
+        .then(text => {
+          bookLines = text.split('\n').map(line => line.trimEnd());
+          bookPages = [];
+          for (let i = 0; i < bookLines.length; i += LINES_PER_PAGE) {
+            const pageLines = bookLines.slice(i, i + LINES_PER_PAGE);
+            bookPages.push(pageLines.join('\n'));
+          }
+          currentPage = 0;
+          renderPage();
+        });
+      document.getElementById('chapter-title').textContent = chapterTitles[chapter];
+    }
+
+    function renderPage() {
+      document.getElementById('book-content').innerHTML = `
+        <div class="book-page">
+          <div class="page-header">
+            <button class="nav-btn" onclick="prevPage()" ${currentPage === 0 ? 'disabled' : ''}>&larr; Previous</button>
+            <span class="page-number">Page ${currentPage + 1} of ${bookPages.length}</span>
+            <button class="nav-btn" onclick="nextPage()" ${currentPage === bookPages.length - 1 ? 'disabled' : ''}>Next &rarr;</button>
+          </div>
+          <div class="page-content" style="white-space: pre-line; font-family: 'Georgia', serif; font-size: 1.1rem;">
+            ${bookPages[currentPage] || ""}
+          </div>
+          <div class="page-footer">
+            <button class="nav-btn" onclick="prevPage()" ${currentPage === 0 ? 'disabled' : ''}>&larr; Previous</button>
+            <span class="page-number">Page ${currentPage + 1} of ${bookPages.length}</span>
+            <button class="nav-btn" onclick="nextPage()" ${currentPage === bookPages.length - 1 ? 'disabled' : ''}>Next &rarr;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        renderPage();
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < bookPages.length - 1) {
+        currentPage++;
+        renderPage();
+      }
+    }
+
+    function switchChapter(chapter) {
+      currentChapter = chapter;
+      loadChapter(chapter);
+      document.querySelectorAll('.chapter-menu a').forEach(a => a.classList.remove('active'));
+      document.querySelector(`.chapter-menu a[onclick*="${chapter}"]`).classList.add('active');
+    }
+
+    window.onload = () => {
+      switchChapter('introduction');
+    };
+  </script>
+</body>
+</html>

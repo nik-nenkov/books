@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>In the Life of a Project - Book Series</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+      margin: 0;
+      background: #f4f6fb;
+      color: #222;
+    }
+    .container {
+      max-width: 700px;
+      margin: 3rem auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #0001;
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+    .cover {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 12px #0002;
+      display: block;
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+      color: #1a237e;
+      text-align: center;
+    }
+    p {
+      font-size: 1.15rem;
+      color: #444;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      margin-bottom: 1.1em;
+      background: #f0f3fa;
+      border-radius: 8px;
+      transition: background 0.2s;
+      padding: 0.7em 1em;
+      box-shadow: 0 1px 4px #0001;
+    }
+    li:hover {
+      background: #e3e8f7;
+    }
+    a {
+      color: #1976d2;
+      text-decoration: none;
+      font-size: 1.08rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+      display: block;
+    }
+    a:hover {
+      color: #0d47a1;
+      text-decoration: underline;
+    }
+    @media (max-width: 800px) {
+      .container { max-width: 98vw; padding: 1rem; }
+      .cover { max-height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="heading.jpg" alt="Book Series Cover" class="cover" />
+    <h1>In the Life of a Project: Book Series</h1>
+    <p>Planned books in this series:</p>
+    <ul id="book-list"></ul>
+  </div>
+  <script>
+    const bookTitles = [
+      "In the Life of a Project: From Concept to Maintenance",
+      "In the Life of a Project: Creating a Clear Assignment",
+      "In the Life of a Project: System Architecture and Integration",
+      "In the Life of a Project: Effective Team Collaboration and Communication",
+      "In the Life of a Project: Navigating Technical Debt and Trade-Offs",
+      "In the Life of a Project: Testing and Quality Assurance in Practice",
+      "In the Life of a Project: Scalability and Performance Optimization",
+      "In the Life of a Project: Deployment and DevOps Essentials",
+      "In the Life of a Project: Managing Change and Stakeholder Expectations",
+      "In the Life of a Project: Lessons from Failure and Success",
+      "In the Life of a Project: Building Robust Backend Systems",
+      "In the Life of a Project: Crafting Intuitive Frontend Experiences",
+      "In the Life of a Project: Securing Software in a Threat-Filled World",
+      "In the Life of a Project: Data Engineering and Management",
+      "In the Life of a Project: Full-Stack Integration and Workflow",
+      "In the Life of a Project: Leveraging Cloud and Serverless Architectures",
+      "In the Life of a Project: Adopting AI and Emerging Technologies",
+    ];
+    const ul = document.getElementById('book-list');
+    bookTitles.forEach((title, idx) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = `(${idx + 1}) ${title}`;
+      a.href = `book${idx + 1}.html`;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  </script>
+</body>
+</html>
